@@ -1,0 +1,25 @@
+services:
+  llama-server:
+    build: .
+    image: localhost/rocm_llamacpp:latest
+    container_name: rocm_llamacpp
+    network_mode: host
+    ipc: host
+    privileged: true
+    devices:
+      - "/dev/kfd:/dev/kfd"
+      - "/dev/dri:/dev/dri"
+    security_opt:
+      - label=disable
+      - seccomp=unconfined
+    volumes:
+      - gguf_models:/root/.cache/huggingface/hub
+      - ./config.yaml:/workspace/config.yaml:ro
+    environment:
+      - HIP_VISIBLE_DEVICES=0
+    command: ["--config", "/workspace/config.yaml", "--listen", "0.0.0.0:8080"]
+    stdin_open: true
+    tty: true
+
+volumes:
+  gguf_models:
