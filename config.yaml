@@ -13,7 +13,7 @@ macros:
     --no-mmap
     --spec-type ngram-mod
     --no-warmup
-    --fit-target 2048
+    --fit-target 512
     --fit-ctx 12000
 
 models:
@@ -56,6 +56,11 @@ models:
       --reasoning off
       -c 32768
     ttl: 900
+
+  "Diffusion-Gemma-26B-A4B":
+    cmd: >
+      ${llama-server}
+      -hf unsloth/diffusiongemma-26B-A4B-it-GGUF
 
 matrix:
   vars:
