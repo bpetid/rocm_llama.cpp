@@ -2,10 +2,10 @@ FROM docker.io/rocm/dev-ubuntu-24.04:7.2.4-complete
 
 
 ARG LLAMA_CPP_REPO="https://github.com/ggml-org/llama.cpp.git"
-ARG LLAMA_CPP_COMMIT="4c6595503fe45d5a39f88d194e270f64c7424677"
+ARG LLAMA_CPP_COMMIT="84de01a1f1c847292b8d90a9c0bff6619f2919be"
 
-ARG LLAMA_SWAP_CHECKSUM="564137e5776c1fc60897e4a8de0f731ed06f3ea28eec02a1b31bdb0f24084e2e"
-ARG LLAMA_SWAP_URL="https://github.com/mostlygeek/llama-swap/releases/download/v223/llama-swap_223_linux_amd64.tar.gz"
+ARG LLAMA_SWAP_CHECKSUM="31f325b39b046869a4c6661803deeb522587ff4895a37f697d64a10e4a484742"
+ARG LLAMA_SWAP_URL="https://github.com/mostlygeek/llama-swap/releases/download/v228/llama-swap_228_linux_amd64.tar.gz"
 
 
 RUN apt-get update && apt-get install -y git libssl-dev cmake ninja-build ccache curl && rm -rf /var/lib/apt/lists/*
