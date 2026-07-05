@@ -8,7 +8,8 @@ ARG LLAMA_SWAP_CHECKSUM="31f325b39b046869a4c6661803deeb522587ff4895a37f697d64a10
 ARG LLAMA_SWAP_URL="https://github.com/mostlygeek/llama-swap/releases/download/v228/llama-swap_228_linux_amd64.tar.gz"
 
 
-RUN apt-get update && apt-get install -y git libssl-dev cmake ninja-build ccache curl && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y git libssl-dev cmake ninja-build ccache curl python3-pip && rm -rf /var/lib/apt/lists/*
+RUN pip3 install --break-system-packages huggingface_hub[cli]
 
 
 WORKDIR /workspace

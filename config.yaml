@@ -13,7 +13,7 @@ macros:
     --no-mmap
     --spec-type ngram-mod
     --no-warmup
-    --fit-target 512
+    --fit-target 2048
     --fit-ctx 12000
 
 models:
@@ -30,19 +30,13 @@ models:
       -hf mradermacher/GLM-4.7-Flash-heretic-1.2.0-GGUF:Q8_0
       --cpu-moe
 
-  "GLM-Steam-106B":
+  "gemma-4-26B-A4B":
     cmd: >
       ${llama-server}
-      -hf bartowski/TheDrummer_GLM-Steam-106B-A12B-v1-GGUF:Q2_K
-      --cpu-moe
-
-  "gemma-4-26B":
-    cmd: >
-      ${llama-server}
-      -hf mradermacher/gemma-4-26B-A4B-it-abliterix-i1-GGUF
+      -hf TrevorJS/gemma-4-26B-A4B-it-uncensored-GGUF
       -c 65536
 
-  "gemma-4-31B-uncensored":
+  "gemma-4-31B":
     cmd: >
       ${llama-server}
       -hf llmfan46/gemma-4-31B-it-uncensored-heretic-GGUF
@@ -57,23 +51,17 @@ models:
       -c 32768
     ttl: 900
 
-  "Diffusion-Gemma-26B-A4B":
-    cmd: >
-      ${llama-server}
-      -hf unsloth/diffusiongemma-26B-A4B-it-GGUF
 
 matrix:
   vars:
     q: Qwen3-4B
     qwecd: Qwen-Coder-Next
     glmfl: GLM-4.7-Flash
-    glmstm: GLM-Steam-106B
-    gem426: gemma-4-26B
-    gem431: gemma-4-31B-uncensored
+    gem426: gemma-4-26B-A4B
+    gem431: gemma-4-31B
 
   sets:
     qwen_coder_with_qwen3_4b: "qwecd & q"
     glm_flash_with_qwen3_4b: "glmfl & q"
-    glm_steam_with_qwen3_4b: "glmstm & q"
     gemma_26B_with_qwen3_4b: "gem426 & q"
     gemma_31B_with_qwen3_4b: "gem431 & q"

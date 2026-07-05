@@ -21,5 +21,18 @@ services:
     stdin_open: true
     tty: true
 
+  download-model:
+    image: localhost/rocm_llamacpp:latest
+    container_name: rocm_downloader
+    volumes:
+      - gguf_models:/root/.cache/huggingface/hub
+    environment:
+      - HF_TOKEN
+    entrypoint: ["hf", "download"]
+    command: []
+    # 'profiles' prevents this container from starting when you run 'podman-compose up'
+    profiles:
+      - tools
+
 volumes:
   gguf_models:
