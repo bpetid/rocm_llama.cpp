@@ -4,7 +4,7 @@ logToStdout: "both"
 
 macros:
   "llama-server": >
-    /workspace/llama.cpp/build/bin/llama-server
+    /workspace/ROCmFPX/build-rdna4/bin/llama-server
     --port ${PORT}
     -lv 3
     --host 127.0.0.1

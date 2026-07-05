@@ -8,30 +8,18 @@ ARG LLAMA_SWAP_CHECKSUM="31f325b39b046869a4c6661803deeb522587ff4895a37f697d64a10
 ARG LLAMA_SWAP_URL="https://github.com/mostlygeek/llama-swap/releases/download/v228/llama-swap_228_linux_amd64.tar.gz"
 
 
-RUN apt-get update && apt-get install -y git libssl-dev cmake ninja-build ccache curl python3-pip && rm -rf /var/lib/apt/lists/*
+RUN apt-get update \
+	&& apt-get install -y git libssl-dev cmake ninja-build ccache curl python3-pip libvulkan-dev glslc spirv-headers \
+	&& rm -rf /var/lib/apt/lists/*
 RUN pip3 install --break-system-packages huggingface_hub[cli]
 
 
 WORKDIR /workspace
 RUN --mount=type=cache,target=/root/.cache/ccache \
-	mkdir llama.cpp && \
-    cd llama.cpp && \
-    git init && \
-    git remote add origin $LLAMA_CPP_REPO && \
-    git fetch --depth 1 origin $LLAMA_CPP_COMMIT && \
-    git checkout FETCH_HEAD && \
-    HIPCXX="$(hipconfig -l)/clang" \
-    HIP_PATH="$(hipconfig -R)" \
-	cmake -S . -B build -G Ninja \
-    -DGGML_HIP=ON \
-    -DGPU_TARGETS=gfx1201 \
-    -DGGML_HIP_ROCWMMA_FATTN=ON \
-    -DGGML_HIP_GRAPHS=ON \
-    -DGGML_LTO=ON \
-    -DGGML_NATIVE=ON \
-    -DCMAKE_BUILD_TYPE=Release && \
-    cmake --build build
-
+	git clone https://github.com/charlie12345/ROCmFPX.git \
+	&& cd ROCmFPX \
+	&& chmod +x scripts/*.sh \
+	&& env JOBS=16 CFLAGS="-w" CXXFLAGS="-w" scripts/build-rdna4.sh
 
 RUN curl -sSL -o llama_swap.tar.gz $LLAMA_SWAP_URL && \
     ACTUAL_HASH=$(cksum -a sha256 --untagged llama_swap.tar.gz | awk '{print $1}') && \
