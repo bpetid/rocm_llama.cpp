@@ -1,8 +1,10 @@
 FROM docker.io/rocm/dev-ubuntu-24.04:7.2.4-complete
 
 
-ARG LLAMA_CPP_REPO="https://github.com/ggml-org/llama.cpp.git"
-ARG LLAMA_CPP_COMMIT="84de01a1f1c847292b8d90a9c0bff6619f2919be"
+ARG LLAMA_CPP_REPO="https://github.com/PrismML-Eng/llama.cpp.git"
+ARG LLAMA_CPP_COMMIT="7529fdaaf99ffdc5ca71ace9c7409a56b27ad92f"
+# ARG LLAMA_CPP_REPO="https://github.com/ggml-org/llama.cpp.git"
+# ARG LLAMA_CPP_COMMIT="84de01a1f1c847292b8d90a9c0bff6619f2919be"
 
 ARG LLAMA_SWAP_CHECKSUM="31f325b39b046869a4c6661803deeb522587ff4895a37f697d64a10e4a484742"
 ARG LLAMA_SWAP_URL="https://github.com/mostlygeek/llama-swap/releases/download/v228/llama-swap_228_linux_amd64.tar.gz"
