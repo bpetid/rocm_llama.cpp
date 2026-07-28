@@ -3,7 +3,10 @@ services:
     build: .
     image: localhost/rocm_llamacpp:latest
     container_name: rocm_llamacpp
-    network_mode: host
+    ports:
+      - "8080:8080"
+    networks:
+      - webui-net
     ipc: host
     privileged: true
     devices:
@@ -24,6 +27,7 @@ services:
   download-model:
     image: localhost/rocm_llamacpp:latest
     container_name: rocm_downloader
+    network_mode: host
     volumes:
       - gguf_models:/root/.cache/huggingface/hub
     environment:
@@ -36,3 +40,8 @@ services:
 
 volumes:
   gguf_models:
+    external: true
+
+networks:
+  webui-net:
+    external: true
